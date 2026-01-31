@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Cycle Quiz</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Quiz</h1>
+        <nav><!-- Same nav --></nav>
+    </header>
+    <main>
+        <section>
+            <h2>Test Your Knowledge</h2>
+            <form id="quiz-form">
+                <p>1. What rock forms from cooled lava?</p>
+                <label><input type="radio" name="q1" value="igneous"> Igneous</label><br>
+                <label><input type="radio" name="q1" value="sedimentary"> Sedimentary</label><br>
+                <label><input type="radio" name="q1" value="metamorphic"> Metamorphic</label><br>
+                <button type="button" onclick="checkQuiz()">Submit</button>
+            </form>
+            <div id="quiz-result" class="hidden"></div>
+        </section>
+    </main>
+    <footer><!-- Same --></footer>
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -3,36 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Rock Cycle | Earth's Journey</title>
+    <title>Rock Cycle Formation - Home</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header>
-        <h1>The Eternal Rock Cycle</h1>
+        <h1>The Rock Cycle</h1>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="#igneous">Igneous</a></li>
-                <li><a href="#sedimentary">Sedimentary</a></li>
-                <li><a href="#metamorphic">Metamorphic</a></li>
+                <li><a href="igneous.html">Igneous Rocks</a></li>
+                <li><a href="sedimentary.html">Sedimentary Rocks</a></li>
+                <li><a href="metamorphic.html">Metamorphic Rocks</a></li>
+                <li><a href="weathering.html">Weathering & Erosion</a></li>
+                <li><a href="deposition.html">Deposition & Compaction</a></li>
+                <li><a href="metamorphism.html">Heat & Pressure</a></li>
+                <li><a href="melting.html">Melting & Cooling</a></li>
+                <li><a href="diagram.html">Interactive Diagram</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
             </ul>
         </nav>
     </header>
-
     <main>
-        <section id="hero">
-            <h2>From Magma to Mountains</h2>
-            <p>Rocks are constantly changing. Explore the process of transformation.</p>
-        </section>
-
-        <section class="diagram-container">
-            <h3>The Cycle at a Glance</h3>
-            <div class="placeholder-img">
-                <img src="images/rock-cycle-diagram.jpg" alt="Rock Cycle Diagram">
+        <section>
+            <h2>Introduction</h2>
+            <p>The rock cycle is a continuous process describing how rocks change from one type to another through geological processes.</p>
+            <img src="images/rockcycle.png" alt="Rock Cycle Diagram" class="center-img">
+            <button onclick="toggleContent('intro-details')">Learn More</button>
+            <div id="intro-details" class="hidden">
+                <p>It involves igneous, sedimentary, and metamorphic rocks, driven by Earth's internal heat and surface processes.</p>
             </div>
         </section>
     </main>
-
+    <footer>
+        <p>&copy; 2026 Rock Cycle Education</p>
+    </footer>
     <script src="js/script.js"></script>
 </body>
 </html>
