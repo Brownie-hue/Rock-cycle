@@ -1,0 +1,46 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f1ea;
+    color: #333;
+}
+
+header {
+    background: #4a3728;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav a {
+    color: #d4a373;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#hero {
+    padding: 50px 20px;
+    text-align: center;
+    background: #bcb8b1;
+}
+
+.placeholder-img img {
+    max-width: 100%;
+    height: auto;
+    border: 5px solid #4a3728;
+    border-radius: 8px;
+}
