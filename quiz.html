@@ -1,30 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock Cycle Quiz</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Rock Cycle Quiz - Grade 7</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1 {
+            color: #2c5f2d;
+            text-align: center;
+            border-bottom: 3px solid #2c5f2d;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #444;
+        }
+        .question {
+            background-color: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .question h3 {
+            margin-top: 0;
+            color: #2c5f2d;
+        }
+        label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        button {
+            display: block;
+            margin: 30px auto;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            background-color: #2c5f2d;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3a7b3b;
+        }
+        #result {
+            text-align: center;
+            font-size: 1.3rem;
+            margin: 30px 0;
+            font-weight: bold;
+            display: none;
+        }
+        .correct { color: #2c5f2d; }
+        .incorrect { color: #c0392b; }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Quiz</h1>
-        <nav><!-- Same nav --></nav>
-    </header>
-    <main>
-        <section>
-            <h2>Test Your Knowledge</h2>
-            <form id="quiz-form">
-                <p>1. What rock forms from cooled lava?</p>
-                <label><input type="radio" name="q1" value="igneous"> Igneous</label><br>
-                <label><input type="radio" name="q1" value="sedimentary"> Sedimentary</label><br>
-                <label><input type="radio" name="q1" value="metamorphic"> Metamorphic</label><br>
-                <button type="button" onclick="checkQuiz()">Submit</button>
-            </form>
-            <div id="quiz-result" class="hidden"></div>
-        </section>
-    </main>
-    <footer><!-- Same --></footer>
-    <script src="js/script.js"></script>
+
+    <h1>Rock Cycle Quiz – Grade 7</h1>
+    <p style="text-align: center; font-style: italic;">Test your knowledge of the three main rock types and how they change!</p>
+
+    <form id="quizForm">
+
+        <div class="question">
+            <h3>1. What are the three main types of rocks in the rock cycle?</h3>
+            <label><input type="radio" name="q1" value="A"> A) Igneous, sedimentary, and fossil</label>
+            <label><input type="radio" name="q1" value="B"> B) Igneous, metamorphic, and sedimentary</label>
+            <label><input type="radio" name="q1" value="C"> C) Volcanic, layered, and crystal</label>
+            <label><input type="radio" name="q1" value="D"> D) Magma, lava, and mineral</label>
+        </div>
+
+        <div class="question">
+            <h3>2. Which type of rock forms when magma or lava cools and hardens?</h3>
+            <label><input type="radio" name="q2" value="A"> A) Sedimentary</label>
+            <label><input type="radio" name="q2" value="B"> B) Metamorphic</label>
+            <label><input type="radio" name="q2" value="C"> C) Igneous</label>
+            <label><input type="radio" name="q2" value="D"> D) Fossil</label>
+        </div>
+
+        <div class="question">
+            <h3>3. Sedimentary rocks are mostly formed by:</h3>
+            <label><input type="radio" name="q3" value="A"> A) Heat and pressure changing existing rocks</label>
+            <label><input type="radio" name="q3" value="B"> B) Weathering, erosion, deposition, compaction, and cementation of sediments</label>
+            <label><input type="radio" name="q3" value="C"> C) Melting of rocks into magma</label>
+            <label><input type="radio" name="q3" value="D"> D) Crystals growing slowly underground</label>
+        </div>
+
+        <div class="question">
+            <h3>4. Metamorphic rocks form when existing rocks are changed by:</h3>
+            <label><input type="radio" name="q4" value="A"> A) Wind and rain only</label>
+            <label><input type="radio" name="q4" value="B"> B) Heat and/or pressure deep inside Earth (without melting)</label>
+            <label><input type="radio" name="q4" value="C"> C) Cooling of lava on the surface</label>
+            <label><input type="radio" name="q4" value="D"> D) Compaction of plant remains</label>
+        </div>
+
+        <div class="question">
+            <h3>5. What process breaks rocks into smaller pieces and is the first step in forming sedimentary rocks?</h3>
+            <label><input type="radio" name="q5" value="A"> A) Erosion</label>
+            <label><input type="radio" name="q5" value="B"> B) Weathering</label>
+            <label><input type="radio" name="q5" value="C"> C) Deposition</label>
+            <label><input type="radio" name="q5" value="D"> D) Crystallization</label>
+        </div>
+
+        <div class="question">
+            <h3>6. The difference between intrusive and extrusive igneous rocks is:</h3>
+            <label><input type="radio" name="q6" value="A"> A) Intrusive rocks cool slowly underground → larger crystals; extrusive rocks cool quickly on the surface → smaller crystals</label>
+            <label><input type="radio" name="q6" value="B"> B) Intrusive rocks form from lava; extrusive rocks form from magma</label>
+            <label><input type="radio" name="q6" value="C"> C) Intrusive rocks are always dark; extrusive rocks are always light</label>
+            <label><input type="radio" name="q6" value="D"> D) There is no difference</label>
+        </div>
+
+        <div class="question">
+            <h3>7. Which process turns sedimentary or igneous rock into metamorphic rock?</h3>
+            <label><input type="radio" name="q7" value="A"> A) Melting</label>
+            <label><input type="radio" name="q7" value="B"> B) Weathering and erosion</label>
+            <label><input type="radio" name="q7" value="C"> C) Heat and pressure</label>
+            <label><input type="radio" name="q7" value="D"> D) Cementation</label>
+        </div>
+
+        <div class="question">
+            <h3>8. In the rock cycle, any type of rock can eventually become:</h3>
+            <label><input type="radio" name="q8" value="A"> A) Only sedimentary rock</label>
+            <label><input type="radio" name="q8" value="B"> B) Only igneous rock</label>
+            <label><input type="radio" name="q8" value="C"> C) Any of the three main rock types (igneous, sedimentary, or metamorphic)</label>
+            <label><input type="radio" name="q8" value="D"> D) Only metamorphic rock</label>
+        </div>
+
+        <div class="question">
+            <h3>9. Magma that reaches Earth's surface is called:</h3>
+            <label><input type="radio" name="q9" value="A"> A) Lava</label>
+            <label><input type="radio" name="q9" value="B"> B) Sediment</label>
+            <label><input type="radio" name="q9" value="C"> C) Shale</label>
+            <label><input type="radio" name="q9" value="D"> D) Marble</label>
+        </div>
+
+        <div class="question">
+            <h3>10. Which of these is NOT a way rocks change in the rock cycle?</h3>
+            <label><input type="radio" name="q10" value="A"> A) Sedimentary rock → metamorphic rock (heat & pressure)</label>
+            <label><input type="radio" name="q10" value="B"> B) Metamorphic rock → igneous rock (melting into magma, then cooling)</label>
+            <label><input type="radio" name="q10" value="C"> C) Igneous rock → sedimentary rock (weathering → erosion → deposition → compaction/cementation)</label>
+            <label><input type="radio" name="q10" value="D"> D) Sedimentary rock → stays sedimentary rock forever (no change possible)</label>
+        </div>
+
+        <button type="button" onclick="checkAnswers()">Submit Quiz</button>
+
+    </form>
+
+    <div id="result"></div>
+
+    <footer>
+        Rock Cycle Quiz • Created for Grade 7 Science • Feel free to fork & improve!
+    </footer>
+
+    <script>
+        const correctAnswers = {
+            q1: "B",
+            q2: "C",
+            q3: "B",
+            q4: "B",
+            q5: "B",
+            q6: "A",
+            q7: "C",
+            q8: "C",
+            q9: "A",
+            q10: "D"
+        };
+
+        function checkAnswers() {
+            let score = 0;
+            let total = 10;
+            let feedback = "";
+
+            for (let i = 1; i <= 10; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selected) {
+                    if (selected.value === correctAnswers[`q${i}`]) {
+                        score++;
+                    }
+                }
+            }
+
+            let message = "";
+            let color = "";
+
+            if (score >= 9) {
+                message = `Excellent! You are a Rock Cycle Expert! 🌟 (${score}/${total})`;
+                color = "#2c5f2d";
+            } else if (score >= 7) {
+                message = `Great job! You have a solid understanding. (${score}/${total})`;
+                color = "#2c5f2d";
+            } else if (score >= 5) {
+                message = `Good effort! Review the rock cycle processes a bit more. (${score}/${total})`;
+                color = "#e67e22";
+            } else {
+                message = `Keep learning! Look at a rock cycle diagram and try again. (${score}/${total})`;
+                color = "#c0392b";
+            }
+
+            document.getElementById("result").innerHTML = message;
+            document.getElementById("result").style.color = color;
+            document.getElementById("result").style.display = "block";
+
+            window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+        }
+    </script>
+
 </body>
 </html>
