@@ -7,7 +7,7 @@ body {
 }
 
 header {
-    background-color: #8b4513; /* Earthy brown */
+    background-color: #135f8b; /* Earthy brown */
     color: white;
     padding: 10px;
     text-align: center;
@@ -46,7 +46,7 @@ main {
 }
 
 button {
-    background-color: #a0522d;
+    background-color: #2d6ca0;
     color: white;
     border: none;
     padding: 10px;
@@ -54,11 +54,11 @@ button {
 }
 
 button:hover {
-    background-color: #cd853f;
+    background-color: #3f8bcd;
 }
 
 footer {
-    background-color: #8b4513;
+    background-color: #136d8b;
     color: white;
     text-align: center;
     padding: 10px;
