@@ -169,59 +169,81 @@
     <footer>
         Rock Cycle Quiz • Created for Grade 7 Science • Feel free to fork & improve!
     </footer>
-
     <script>
-        const correctAnswers = {
-            q1: "B",
-            q2: "C",
-            q3: "B",
-            q4: "B",
-            q5: "B",
-            q6: "A",
-            q7: "C",
-            q8: "C",
-            q9: "A",
-            q10: "D"
-        };
+    const quizData = [
+        { num: 1, correct: "B", answerText: "B) Igneous, metamorphic, and sedimentary", explanation: "These are the three main types of rocks in the rock cycle." },
+        { num: 2, correct: "C", answerText: "C) Igneous", explanation: "Igneous rocks are formed when magma or lava cools and hardens." },
+        { num: 3, correct: "B", answerText: "B) Weathering, erosion, deposition, compaction, and cementation of sediments", explanation: "This is the main way sedimentary rocks are created." },
+        { num: 4, correct: "B", answerText: "B) Heat and/or pressure deep inside Earth (without melting)", explanation: "Metamorphic rocks form when heat and pressure change rocks without melting them." },
+        { num: 5, correct: "B", answerText: "B) Weathering", explanation: "Weathering is the very first step — it breaks big rocks into small pieces." },
+        { num: 6, correct: "A", answerText: "A) Intrusive rocks cool slowly underground → larger crystals; extrusive rocks cool quickly on the surface → smaller crystals", explanation: "The speed of cooling decides how big the crystals become." },
+        { num: 7, correct: "C", answerText: "C) Heat and pressure", explanation: "Heat and pressure are what change rocks into metamorphic rocks." },
+        { num: 8, correct: "C", answerText: "C) Any of the three main rock types (igneous, sedimentary, or metamorphic)", explanation: "In the rock cycle, every rock type can change into any of the other types." },
+        { num: 9, correct: "A", answerText: "A) Lava", explanation: "When magma comes out to the surface, we call it lava." },
+        { num:10, correct: "D", answerText: "D) Sedimentary rock → stays sedimentary rock forever (no change possible)", explanation: "No rock stays the same forever — all rock types can change in the rock cycle." }
+    ];
 
-        function checkAnswers() {
-            let score = 0;
-            let total = 10;
-            let feedback = "";
+    function checkAnswers() {
+        let score = 0;
+        let feedback = "";
 
-            for (let i = 1; i <= 10; i++) {
-                const selected = document.querySelector(`input[name="q${i}"]:checked`);
-                if (selected) {
-                    if (selected.value === correctAnswers[`q${i}`]) {
-                        score++;
-                    }
-                }
+        quizData.forEach(q => {
+            const selected = document.querySelector(`input[name="q${q.num}"]:checked`);
+            const userValue = selected ? selected.value : null;
+            const isCorrect = userValue === q.correct;
+
+            if (isCorrect) score++;
+
+            const statusClass = isCorrect ? "correct" : "incorrect";
+            const statusText  = isCorrect ? "Correct ✓" : "Wrong ✗";
+
+            let userChoice = "Not answered";
+            if (userValue) {
+                const label = selected.parentElement.textContent.trim();
+                userChoice = label.substring(3).trim(); // remove A), B), etc.
             }
 
-            let message = "";
-            let color = "";
+            feedback += `
+                <div style="margin: 16px 0; padding: 12px; border-left: 5px solid ${isCorrect ? '#2c5f2d' : '#c0392b'}; background: ${isCorrect ? '#f0f9f0' : '#fff5f5'}; border-radius: 4px;">
+                    <strong>Question ${q.num}: ${statusText}</strong><br>
+                    ${!isCorrect ? `
+                        <div style="margin-top:8px;">
+                            You chose: <strong>${userChoice}</strong><br>
+                            Correct answer: <strong>${q.answerText}</strong><br>
+                            <em style="color:#555;">${q.explanation}</em>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        });
 
-            if (score >= 9) {
-                message = `Excellent! You are a Rock Cycle Expert! 🌟 (${score}/${total})`;
-                color = "#2c5f2d";
-            } else if (score >= 7) {
-                message = `Great job! You have a solid understanding. (${score}/${total})`;
-                color = "#2c5f2d";
-            } else if (score >= 5) {
-                message = `Good effort! Review the rock cycle processes a bit more. (${score}/${total})`;
-                color = "#e67e22";
-            } else {
-                message = `Keep learning! Look at a rock cycle diagram and try again. (${score}/${total})`;
-                color = "#c0392b";
-            }
+        let message = "";
+        let color = "";
 
-            document.getElementById("result").innerHTML = message;
-            document.getElementById("result").style.color = color;
-            document.getElementById("result").style.display = "block";
-
-            window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+        if (score >= 9) {
+            message = `Excellent! Rock Cycle Master! 🌟`;
+            color = "#2c5f2d";
+        } else if (score >= 7) {
+            message = `Very good job!`;
+            color = "#2c5f2d";
+        } else if (score >= 5) {
+            message = `Good effort — look at the explanations below`;
+            color = "#e67e22";
+        } else {
+            message = `Keep practicing! Check the correct answers below`;
+            color = "#c0392b";
         }
-    </script>
 
+        document.getElementById("result").innerHTML = `
+            <div style="font-size:1.6rem; font-weight:bold; margin-bottom:20px; color:${color};">
+                ${message} (${score}/10)
+            </div>
+            ${feedback}
+        `;
+
+        document.getElementById("result").style.display = "block";
+        document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+</script>
 </body>
 </html>
