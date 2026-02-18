@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grade 7 Rock Cycle Quiz - FIXED</title>
+    <title>Grade 7 Rock Cycle Quiz - Shows Correct Answers!</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
@@ -53,7 +53,7 @@
             font-size: 1.1em;
             transition: all 0.3s ease;
         }
-        .answer:hover:not(.selected) {
+        .answer:hover:not(.selected):not(.results-shown) {
             background: #81c784;
             transform: translateX(5px);
         }
@@ -62,16 +62,44 @@
             color: #f57f17;
             font-weight: bold;
         }
+        .answer.correct {
+            background: #4caf50 !important;
+            color: white;
+            animation: pulse 0.5s;
+        }
+        .answer.wrong {
+            background: #f44336 !important;
+            color: white;
+            animation: shake 0.5s;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
         .feedback {
             margin-top: 15px;
             padding: 15px;
             border-radius: 10px;
-            display: none;
             font-weight: bold;
+            display: none;
         }
-        .feedback.correct { background: #c8e6c9; color: #2e7d32; }
-        .feedback.wrong { background: #ffcdd2; color: #c62828; border-left: 5px solid #f44336; }
-        .next-btn, .submit-btn {
+        .feedback.correct { 
+            background: #c8e6c9; 
+            color: #2e7d32; 
+            border-left: 5px solid #4caf50;
+        }
+        .feedback.wrong { 
+            background: #ffcdd2; 
+            color: #c62828; 
+            border-left: 5px solid #f44336;
+        }
+        .submit-btn {
             background: #ff9800;
             color: white;
             padding: 15px 30px;
@@ -80,31 +108,48 @@
             font-size: 1.2em;
             cursor: pointer;
             display: block;
-            margin: 20px auto;
+            margin: 30px auto;
             transition: background 0.3s;
         }
-        .next-btn:hover, .submit-btn:hover {
+        .submit-btn:hover {
             background: #f57c00;
         }
         .score {
             text-align: center;
-            font-size: 1.5em;
-            margin-top: 20px;
+            font-size: 2em;
+            margin: 30px 0;
             color: #8b4513;
+            font-weight: bold;
         }
-        .hidden { display: none; }
+        .play-again {
+            background: #4caf50;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 20px;
+            font-size: 1.1em;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+        .play-again:hover {
+            background: #45a049;
+        }
+        .results-shown .answer {
+            cursor: default;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🌋 Rock Cycle Quiz - Grade 7 🌋</h1>
         <p style="text-align: center; font-size: 1.2em; margin-bottom: 30px;">
-            Test your knowledge on how rocks change! Click an answer for each question.
+            Answer all questions then click Submit to see correct answers! ✅
         </p>
         
         <div id="quiz"></div>
-        <button id="submitBtn" class="submit-btn hidden">Check All Answers & See Score!</button>
-        <div id="score" class="score hidden"></div>
+        <button id="submitBtn" class="submit-btn">Submit All Answers & See Results!</button>
+        <div id="finalScore" class="score" style="display: none;"></div>
     </div>
 
     <script>
@@ -113,144 +158,154 @@
                 question: "What are the three main types of rocks?",
                 answers: ["A) Hot, cold, warm", "B) Igneous, sedimentary, metamorphic", "C) Big, small, medium", "D) Red, blue, green"],
                 correct: 1,
-                explanation: "There are three kinds: igneous from magma, sedimentary from sediments, metamorphic from heat/pressure."
+                explanation: "There are three main types: igneous (from magma), sedimentary (from sediments), metamorphic (from heat/pressure)."
             },
             {
                 question: "Igneous rocks form when magma or lava:",
                 answers: ["A) Freezes", "B) Melts and cools", "C) Breaks apart", "D) Gets wet"],
                 correct: 1,
-                explanation: "Magma cools underground or lava cools on surface to make crystals in igneous rocks."
+                explanation: "Magma cools underground (intrusive) or lava cools on surface (extrusive) to form igneous rocks."
             },
             {
                 question: "Sedimentary rocks form from:",
                 answers: ["A) Heat and melting", "B) Layers of sediments pressing together", "C) Lightning", "D) Wind alone"],
                 correct: 1,
-                explanation: "Sediments (bits of rock) get buried, compacted, and cemented into layers."
+                explanation: "Sediments get buried, compacted, and cemented together in layers."
             },
             {
-                question: "Metamorphic rocks change from other rocks by:",
+                question: "Metamorphic rocks change by:",
                 answers: ["A) Weathering", "B) Heat and pressure (no melting)", "C) Cooling lava", "D) Fossils"],
                 correct: 1,
-                explanation: "High heat and pressure deep in Earth remake the rock without melting it."
+                explanation: "Heat and pressure deep underground change rocks without melting them."
             },
             {
-                question: "What breaks rocks into sediments to start sedimentary rocks?",
+                question: "What breaks rocks into sediments?",
                 answers: ["A) Weathering and erosion", "B) Cooking", "C) Flying", "D) Singing"],
                 correct: 0,
-                explanation: "Weathering cracks rocks; erosion carries pieces away like wind or water."
+                explanation: "Weathering breaks rocks; erosion carries sediment away by wind/water."
             },
             {
-                question: "Granite is an example of:",
-                answers: ["A) Sedimentary rock", "B) Igneous rock", "C) Metamorphic rock", "D) Candy"],
+                question: "Granite is what type of rock?",
+                answers: ["A) Sedimentary", "B) Igneous", "C) Metamorphic", "D) Candy"],
                 correct: 1,
-                explanation: "Granite forms from cooled magma underground—big crystals!"
+                explanation: "Granite forms from cooled magma underground with big visible crystals."
             },
             {
-                question: "Limestone turns into marble by:",
+                question: "Limestone becomes marble by:",
                 answers: ["A) Melting", "B) Heat and pressure", "C) Erosion", "D) Rain"],
                 correct: 1,
-                explanation: "Limestone (sedimentary) becomes marble (metamorphic) under Earth's heat and squeeze."
+                explanation: "Sedimentary limestone transforms into metamorphic marble under heat/pressure."
             },
             {
-                question: "The rock cycle shows rocks:",
-                answers: ["A) Stay the same forever", "B) Can change from one type to another", "C) Only get bigger", "D) Fly away"],
+                question: "Rock cycle shows rocks:",
+                answers: ["A) Stay the same", "B) Change between types", "C) Only get bigger", "D) Fly away"],
                 correct: 1,
-                explanation: "Rocks keep changing over time with Earth's forces like heat, pressure, and water."
+                explanation: "Rocks continuously change between igneous, sedimentary, and metamorphic."
             },
             {
-                question: "Basalt is:",
-                answers: ["A) Igneous rock from lava (small crystals)", "B) Made of sand", "C) A mountain", "D) A fruit"],
+                question: "Basalt forms from:",
+                answers: ["A) Fast cooling lava", "B) Sand layers", "C) Mountains", "D) Fruit"],
                 correct: 0,
-                explanation: "Lava cools fast on surface, making small crystals in basalt."
+                explanation: "Lava cools quickly on surface, forming small crystals in basalt."
             },
             {
-                question: "Which force drives the rock cycle?",
-                answers: ["A) Earth's internal heat and plate movement", "B) Moon phases", "C) Rainbows", "D) Music"],
+                question: "Main force of rock cycle?",
+                answers: ["A) Earth's heat and plate movement", "B) Moon phases", "C) Rainbows", "D) Music"],
                 correct: 0,
-                explanation: "Heat from inside Earth and moving plates push rocks to change."
+                explanation: "Internal Earth heat + tectonic plates drive the rock cycle."
             }
         ];
 
-        let currentQuestion = 0;
+        let answered = new Array(quizData.length).fill(-1);
         let score = 0;
-        let answered = [];
+        let resultsShown = false;
 
         const quizDiv = document.getElementById('quiz');
         const submitBtn = document.getElementById('submitBtn');
-        const scoreDiv = document.getElementById('score');
+        const finalScoreDiv = document.getElementById('finalScore');
 
-        function loadQuestion() {
-            const q = quizData[currentQuestion];
-            quizDiv.innerHTML = `
+        // Load all questions at once
+        function loadAllQuestions() {
+            quizDiv.innerHTML = quizData.map((q, i) => `
                 <div class="question">
-                    <h3>${currentQuestion + 1}. ${q.question}</h3>
-                    ${q.answers.map((ans, i) => 
-                        `<button class="answer" onclick="selectAnswer(${currentQuestion}, ${i})">${ans}</button>`
+                    <h3>${i + 1}. ${q.question}</h3>
+                    ${q.answers.map((ans, j) => 
+                        `<button class="answer" onclick="selectAnswer(${i}, ${j})">${ans}</button>`
                     ).join('')}
-                    <div id="feedback-${currentQuestion}" class="feedback"></div>
+                    <div id="feedback-${i}" class="feedback"></div>
                 </div>
-                ${currentQuestion < quizData.length - 1 ? 
-                    `<button class="next-btn" onclick="nextQuestion()">Next Question</button>` : 
-                    `<button class="submit-btn" onclick="showResults()">Finish Quiz!</button>`
-                }
-            `;
+            `).join('');
         }
 
-        function selectAnswer(qIndex, ansIndex) {
-            const buttons = document.querySelectorAll('.answer');
+        function selectAnswer(questionIndex, answerIndex) {
+            if (resultsShown) return;
+            
+            // Update selected answer
+            answered[questionIndex] = answerIndex;
+            
+            // Visual feedback for this question
+            const buttons = document.querySelectorAll(`#feedback-${questionIndex}`).previousElementSibling.querySelectorAll('.answer');
             buttons.forEach((btn, i) => {
                 btn.classList.remove('selected');
-                if (i === ansIndex) btn.classList.add('selected');
+                if (i === answerIndex) {
+                    btn.classList.add('selected');
+                }
             });
-            answered[qIndex] = ansIndex;
-        }
-
-        function nextQuestion() {
-            if (answered[currentQuestion] === undefined) {
-                alert('Please select an answer first!');
-                return;
-            }
-            currentQuestion++;
-            if (currentQuestion < quizData.length) {
-                loadQuestion();
-            }
         }
 
         function showResults() {
+            resultsShown = true;
             score = 0;
-            quizDiv.innerHTML = '';
+            submitBtn.style.display = 'none';
             
+            quizDiv.innerHTML = ''; // Clear previous content
+            
+            // Show all questions with correct/incorrect marking
             quizData.forEach((q, i) => {
-                const isCorrect = answered[i] === q.correct;
+                const userAnswer = answered[i];
+                const isCorrect = userAnswer === q.correct;
                 if (isCorrect) score++;
                 
-                const feedbackClass = isCorrect ? 'correct' : 'wrong';
-                const feedbackText = isCorrect ? 
-                    '✅ Correct!' : 
-                    `❌ Wrong! Correct: ${q.answers[q.correct]}<br><small>${q.explanation}</small>`;
+                const feedbackId = `feedback-${i}`;
                 
                 quizDiv.innerHTML += `
                     <div class="question">
                         <h3>${i + 1}. ${q.question}</h3>
                         ${q.answers.map((ans, j) => {
-                            const selected = answered[i] === j;
-                            const correctClass = j === q.correct ? 'correct' : '';
-                            const selectedClass = selected && !isCorrect ? 'selected' : '';
-                            return `<button class="answer ${correctClass} ${selectedClass}">${ans}</button>`;
+                            let classes = 'answer';
+                            if (j === q.correct) classes += ' correct';
+                            if (userAnswer === j && !isCorrect) classes += ' wrong selected';
+                            else if (userAnswer === j) classes += ' selected';
+                            return `<button class="${classes}">${ans}</button>`;
                         }).join('')}
-                        <div class="feedback ${feedbackClass}">${feedbackText}</div>
+                        <div id="${feedbackId}" class="feedback ${isCorrect ? 'correct' : 'wrong'}">
+                            ${isCorrect ? 
+                                '✅ Correct!' : 
+                                `❌ Wrong! Correct Answer: ${q.answers[q.correct]}<br><small>${q.explanation}</small>`
+                            }
+                        </div>
                     </div>
                 `;
             });
             
+            // Show final score
+            finalScoreDiv.innerHTML = `Your Score: ${score}/${quizData.length} 🎉`;
+            finalScoreDiv.style.display = 'block';
+            
+            // Add play again button
             quizDiv.innerHTML += `
-                <div class="score">Your Final Score: ${score}/${quizData.length} 🎉</div>
-                <button class="submit-btn" onclick="location.reload()">Play Again!</button>
+                <button class="play-again" onclick="location.reload()">🔄 Play Again!</button>
             `;
+            
+            // Add results-shown class to disable interactions
+            document.body.classList.add('results-shown');
         }
 
-        // Start the quiz
-        loadQuestion();
+        // Event listeners
+        submitBtn.addEventListener('click', showResults);
+
+        // Start quiz
+        loadAllQuestions();
     </script>
 </body>
 </html>
